@@ -29,8 +29,7 @@ const addContact = async (body) => {
   const db = await listContacts();
   db.push(contact);
   await fs.writeFile(contactsPath, JSON.stringify(db));
-  const data = await listContacts();
-  return data;
+  return db;
 };
 
 const updateContact = async (contactId, body) => {
