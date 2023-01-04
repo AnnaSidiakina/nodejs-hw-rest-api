@@ -4,7 +4,7 @@ const {
   removeContact,
   addContact,
   updateContact,
-} = require("../service/index");
+} = require("../service/contacts");
 const { BadRequest, NotFound } = require("http-errors");
 const {
   validationSchema,
