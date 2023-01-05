@@ -18,10 +18,10 @@ const contact = new Schema(
       type: Boolean,
       default: false,
     },
-    // owner: {
-    //   type: SchemaTypes.ObjectId,
-    //   ref: "user",
-    // },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -39,7 +39,6 @@ const validationSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email({
     minDomainSegments: 2,
-    tlds: { allow: ["com", "net"] },
   }),
   phone: Joi.string(),
   favorite: Joi.bool(),

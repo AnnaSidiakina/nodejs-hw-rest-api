@@ -14,10 +14,10 @@ const signup = async (req, res, next) => {
     if (user) {
       throw new Conflict("Email in use");
     }
-    const { error } = validationSchema.validate(body);
-    if (error) {
-      throw BadRequest("missing required name field");
-    }
+    // const { error } = validationSchema.validate(req.body);
+    // if (error) {
+    //   throw BadRequest("missing required name field");
+    // }
     const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     const data = await User.create({ email, password: hashPassword });
     res.status(201).json({
@@ -49,7 +49,8 @@ const login = async (req, res, next) => {
     const payload = {
       id: user._id,
     };
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "3h" });
+    await User.findByIdAndUpdate(user._id, { token });
     res.status(200).json({
       token: token,
       user: {
@@ -62,7 +63,18 @@ const login = async (req, res, next) => {
   }
 };
 
+const logout = async (req, res, next) => {
+  try {
+    const { _id } = req.user;
+    await User.findByIdAndUpdate(_id, { token: null });
+    res.status(204).json();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   signup,
   login,
+  logout,
 };

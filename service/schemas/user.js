@@ -37,17 +37,13 @@ user.post("save", handleError);
 
 const validationSchema = Joi.object({
   password: Joi.string().required(),
-  email: Joi.string().required(),
+  email: Joi.string().email().required(),
 
-  subscription: Joi.string()
-    .valid("starter", "pro", "business")
-    .default("starter"),
-  token: Joi.string().default(null),
+  // subscription: Joi.string()
+  //   .valid("starter", "pro", "business")
+  //   .default("starter"),
+  // token: Joi.string().default(null),
 });
-
-// const updateFavoriteSchema = Joi.object({
-//   favorite: Joi.bool().required(),
-// });
 
 const User = mongoose.model("user", user);
 
