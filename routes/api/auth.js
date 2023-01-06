@@ -1,13 +1,14 @@
 const express = require("express");
-const ctrlAuth = require("../../controller/auth");
+const { signup, login, logout } = require("../../controller/auth/index");
 const { auth } = require("../../middlewares/auth");
+const { ctrlWrapper } = require("../../helpers/ctrlWrapper");
 
 const router = express.Router();
 
-router.post("/signup", ctrlAuth.signup);
+router.post("/signup", ctrlWrapper(signup));
 
-router.post("/login", ctrlAuth.login);
+router.post("/login", ctrlWrapper(login));
 
-router.post("/logout", auth, ctrlAuth.logout);
+router.post("/logout", auth, ctrlWrapper(logout));
 
 module.exports = router;

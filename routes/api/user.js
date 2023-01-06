@@ -1,9 +1,14 @@
 const express = require("express");
-const ctrlAuth = require("../../controller/user");
 const { auth } = require("../../middlewares/auth");
+const { ctrlWrapper } = require("../../helpers/ctrlWrapper");
+const {
+  getCurrentUser,
+  updateSubscriptionStatus,
+} = require("../../controller/user/index");
 
 const router = express.Router();
 
-router.get("/current", auth, ctrlAuth.getCurrentUser);
+router.get("/current", auth, ctrlWrapper(getCurrentUser));
+router.patch("/", auth, ctrlWrapper(updateSubscriptionStatus));
 
 module.exports = router;

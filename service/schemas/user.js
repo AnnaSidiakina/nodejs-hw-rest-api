@@ -38,13 +38,14 @@ user.post("save", handleError);
 const validationSchema = Joi.object({
   password: Joi.string().required(),
   email: Joi.string().email().required(),
+});
 
-  // subscription: Joi.string()
-  //   .valid("starter", "pro", "business")
-  //   .default("starter"),
-  // token: Joi.string().default(null),
+const validationSuscriptionSchema = Joi.object({
+  subscription: Joi.string()
+    .valid("starter", "pro", "business")
+    .default("starter"),
 });
 
 const User = mongoose.model("user", user);
 
-module.exports = { User, validationSchema };
+module.exports = { User, validationSchema, validationSuscriptionSchema };
