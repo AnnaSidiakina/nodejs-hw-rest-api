@@ -7,7 +7,10 @@ const {
   getCurrentUser,
   updateSubscriptionStatus,
   updateAvatar,
+  verifyEmail,
+  resendEmail,
 } = require("../../controller/user/index");
+const { verify } = require("crypto");
 
 const router = express.Router();
 
@@ -19,5 +22,7 @@ router.patch(
   upload.single("avatar"),
   ctrlWrapper(updateAvatar)
 );
+router.get("/verify/:verificationToken", ctrlWrapper(verifyEmail));
+router.post("/verify", ctrlWrapper(resendEmail));
 
 module.exports = router;
