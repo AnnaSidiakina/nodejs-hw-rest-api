@@ -18,12 +18,13 @@ const resendEmail = async (req, res) => {
     throw BadRequest("Verification has already been passed");
   }
 
-  const mail = {
-    to: email,
-    subject: "Confirm registration",
-    html: "<p>Confirm your email address</p>",
-  };
-  await sendEmail(mail);
+  // const mail = {
+  //   to: email,
+  //   subject: "Confirm registration",
+  //   html: "<p>Confirm your email address</p>",
+  // };
+  const verificationToken = user.verificationToken;
+  await sendEmail(email, verificationToken);
 
   res.json({ message: "Verification email sent" });
 };
